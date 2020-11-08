@@ -40,7 +40,6 @@ declare namespace Paseto {
         raw(): Buffer;
     }
 
-    interface IPasetoKeyV1 extends IPasetoKey<V1> {}
     interface IPasetoKeyV2 extends IPasetoKey<V2> {}
 
     /**
@@ -120,13 +119,6 @@ declare namespace Paseto {
 
     namespace PrivateKey {
         /**
-         * shortcut for new PrivateKey(new V1())
-         */
-        export class V1 extends PrivateKey<Paseto.V1> {
-            constructor();
-        }
-
-        /**
          * shortcut for new PrivateKey(new V2())
          */
         export class V2 extends PrivateKey<Paseto.V2> {
@@ -136,13 +128,6 @@ declare namespace Paseto {
 
     namespace PublicKey {
         /**
-         * shortcut for new PublicKey(new V1())
-         */
-        export class V1 extends PublicKey<Paseto.V1> {
-            constructor();
-        }
-
-        /**
          * shortcut for new PublicKey(new V2())
          */
         export class V2 extends PublicKey<Paseto.V2> {
@@ -151,13 +136,6 @@ declare namespace Paseto {
     }
 
     namespace SymmetricKey {
-        /**
-         * shortcut for new SymmetricKey(new V1())
-         */
-        export class V1 extends SymmetricKey<Paseto.V1> {
-            constructor();
-        }
-
         /**
          * shortcut for new SymmetricKey(new V2())
          */
@@ -212,32 +190,6 @@ declare namespace Paseto {
          */
         verify(token: string, key: PublicKey<this>, footer?: Buffer|string): Promise<string>;
         verify(token: string, key: PublicKey<this>, footer: Buffer|string|undefined, cb: (err: Error, data: string) => void): void;
-    }
-
-    /**
-     * protocol version 1
-     */
-    export class V1 implements IProtocol {
-        public private(): Promise<PrivateKey<this>>;
-        public private(cb: (err: Error, key: PrivateKey<this>) => void): void
-
-        public symmetric(): Promise<SymmetricKey<this>>;
-        public symmetric(cb: (err: Error, key: SymmetricKey<this>) => void): void
-
-        public repr(): 'v1';
-        public sklength(): number;
-
-        public encrypt(data: Buffer|string, key: SymmetricKey<this>, footer?: Buffer|string): Promise<string>;
-        public encrypt(data: Buffer|string, key: SymmetricKey<this>, footer: Buffer|string|undefined, cb: (err: Error, token: string) => void): void
-
-        public decrypt(token: string, key: SymmetricKey<this>, footer?: Buffer|string): Promise<string>;
-        public decrypt(token: string, key: SymmetricKey<this>, footer: Buffer|string|undefined, cb: (err: Error, data: string) => void): void;
-
-        public sign(data: Buffer|string, key: PrivateKey<this>, footer?: Buffer|string): Promise<string>;
-        public sign(data: Buffer|string, key: PrivateKey<this>, footer: Buffer|string|undefined, cb: (err: Error, token: string) => void): void;
-
-        public verify(token: string, key: PublicKey<this>, footer?: Buffer|string): Promise<string>;
-        public verify(token: string, key: PublicKey<this>, footer: Buffer|string|undefined, cb: (err: Error, data: string) => void): void;
     }
 
     /**
